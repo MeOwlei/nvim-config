@@ -4,12 +4,15 @@ require("anshit.remap")
 -- Setup mason
 require("mason").setup()
 require("mason-lspconfig").setup({
-  ensure_installed = { 
-      'ts_ls',
-      'rust_analyzer', 
-      "pyright", 
-      "lua_ls", 
-      "bashls" },
+  ensure_installed = {
+		'html',          -- HTML support
+		'cssls',         -- CSS/SCSS/LESS
+		'jsonls',        -- JSON
+		'eslint',        -- ESLint
+		'rust_analyzer',
+		"pyright",
+		"lua_ls",
+		"bashls" },
   handlers = {
     function(server_name)
       require('lspconfig')[server_name].setup({
@@ -65,8 +68,8 @@ local cmp_select = {behavior = cmp.SelectBehavior.Select}
 
 cmp.setup({
   sources = cmp.config.sources({
-    {name = 'nvim_lsp'},  
-    {name = 'luasnip'},  
+    {name = 'nvim_lsp'},
+    {name = 'luasnip'},
   }, {
     {name = 'buffer'},
   }),
