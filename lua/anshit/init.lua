@@ -1,6 +1,8 @@
 require("anshit.set")
 require("anshit.remap")
 
+local lsp_capabilities = require('cmp_nvim_lsp').default_capabilities()
+
 -- Setup mason
 require("mason").setup()
 require("mason-lspconfig").setup({
@@ -9,6 +11,9 @@ require("mason-lspconfig").setup({
 		'cssls',         -- CSS/SCSS/LESS
 		'jsonls',        -- JSON
 		'eslint',        -- ESLint
+        "ts_ls",      -- TypeScript/JavaScript
+        "tailwindcss",   -- TailwindCSS
+        "emmet_ls",      -- HTML/JSX
 		'rust_analyzer',
 		"pyright",
 		"lua_ls",
@@ -60,28 +65,36 @@ vim.api.nvim_create_autocmd('LspAttach', {
   end,
 })
 
-local lsp_capabilities = require('cmp_nvim_lsp').default_capabilities()
 
 --Autocomplete
-local cmp = require('cmp')
-local cmp_select = {behavior = cmp.SelectBehavior.Select}
+local cmp = require("cmp")
+local luasnip = require("luasnip")
+require("luasnip.loaders.from_vscode").lazy_load() -- load VSCode snippets
 
 cmp.setup({
-  sources = cmp.config.sources({
-    {name = 'nvim_lsp'},
-    {name = 'luasnip'},
-  }, {
-    {name = 'buffer'},
-  }),
-  mapping = cmp.mapping.preset.insert({
-    ['<C-p>'] = cmp.mapping.select_prev_item(cmp_select),
-    ['<C-n>'] = cmp.mapping.select_next_item(cmp_select),
-    ['<C-y>'] = cmp.mapping.confirm({select = true}),
-    ['<C-Space>'] = cmp.mapping.complete(),
-  }),
   snippet = {
     expand = function(args)
-      require('luasnip').lsp_expand(args.body)
+      luasnip.lsp_expand(args.body)
     end,
   },
+  mapping = cmp.mapping.preset.insert({
+    ["<C-p>"] = cmp.mapping.select_prev_item(),
+    ["<C-n>"] = cmp.mapping.select_next_item(),
+    ["<C-y>"] = cmp.mapping.confirm({ select = true }),
+    ["<C-Space>"] = cmp.mapping.complete(),
+  }),
+  sources = cmp.config.sources({
+    { name = "nvim_lsp" },
+    { name = "luasnip" },
+    { name = "buffer" },
+    { name = "path" },
+  }),
 })
+
+
+
+
+
+
+
+

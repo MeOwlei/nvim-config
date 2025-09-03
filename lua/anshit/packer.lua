@@ -33,10 +33,27 @@ return require('packer').startup(function(use)
     use { "hrsh7th/nvim-cmp"}
     use { "hrsh7th/cmp-nvim-lsp"}
     use { "hrsh7th/cmp-buffer"}
-    use { "saadparwaiz1/cmp_luasnip"}
-    use { "L3MON4D3/LuaSnip"}
+    use "hrsh7th/cmp-path"
+    use "hrsh7th/cmp-cmdline"
     
+  -- Snippets
+  use "L3MON4D3/LuaSnip"
+  use "saadparwaiz1/cmp_luasnip"
+  use "rafamadriz/friendly-snippets"
+
+  -- Extra VSCode-like features
+  use "windwp/nvim-autopairs"      -- auto close brackets/quotes
+  use "windwp/nvim-ts-autotag"     -- auto close/rename HTML/JSX tags
+  use "onsails/lspkind.nvim"       -- vscode-style pictograms
     -- Comments
     use { "numToStr/Comment.nvim"}
 
 end)
+
+
+
+
+
+
+
+
